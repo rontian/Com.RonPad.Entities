@@ -13,6 +13,7 @@ namespace Com.RonPad.Entities.Interfaces
     public interface IGameEngine : IDisposable
     {
         string Name { get; }
+        bool IsRunning { get; }
         bool IsUpdating { get; }
         Signal0 UpdateCompleted { get; }
         void AddEntity(Entity entity);
