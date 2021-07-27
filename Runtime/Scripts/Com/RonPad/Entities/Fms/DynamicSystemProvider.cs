@@ -5,6 +5,7 @@
 // *************************************************/
 
 using System;
+using Com.RonPad.Entities.Core;
 namespace Com.RonPad.Entities.Fms
 {
     /**
@@ -13,13 +14,13 @@ namespace Com.RonPad.Entities.Fms
      */
     public class DynamicSystemProvider : ISystemProvider
     {
-        private Func<Core.System> _method;
+        private Func<SystemBase> _method;
         /**
          * Constructor
          *
          * @param method The method that returns the System instance;
          */
-        public DynamicSystemProvider(Func<Core.System> method)
+        public DynamicSystemProvider(Func<SystemBase> method)
         {
             _method = method;
         }
@@ -29,7 +30,7 @@ namespace Com.RonPad.Entities.Fms
          *
          * @return The instance of the System
          */
-        public Core.System GetSystem()
+        public SystemBase GetSystem()
         {
             return _method.Invoke();
         }

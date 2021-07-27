@@ -6,13 +6,14 @@
 
 using System;
 using System.Collections.Generic;
+using Com.RonPad.Entities.Core;
 namespace Com.RonPad.Entities.Fms
 {
     /**
 	 * Represents a state for a SystemStateMachine. The state contains any number of SystemProviders which
 	 * are used to add Systems to the World when this state is entered.
 	 */
-    public class GameState
+    public class GameEngineState
     {
         internal readonly List<ISystemProvider> Providers = new List<ISystemProvider>();
 
@@ -23,9 +24,9 @@ namespace Com.RonPad.Entities.Fms
          * @param system The System instance to use for the mapping
          * @return This StateSystemMapping, so more modifications can be applied
          */
-        public StateSystemMapping AddInstance(Core.System system)
+        public StateSystemMapping AddInstance(SystemBase systemBase)
         {
-            return AddProvider(new SystemInstanceProvider(system));
+            return AddProvider(new SystemInstanceProvider(systemBase));
         }
 
         /**
@@ -52,7 +53,7 @@ namespace Com.RonPad.Entities.Fms
          * @param method The method to provide the System instance.
          * @return This StateSystemMapping, so more modifications can be applied.
          */
-        public StateSystemMapping AddMethod(Func<Core.System> method)
+        public StateSystemMapping AddMethod(Func<SystemBase> method)
         {
             return AddProvider(new DynamicSystemProvider(method));
         }

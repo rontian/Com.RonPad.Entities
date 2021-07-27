@@ -5,6 +5,7 @@
 // *************************************************/
 
 using System;
+using Com.RonPad.Entities.Core;
 namespace Com.RonPad.Entities.Fms
 {
     /**
@@ -12,7 +13,7 @@ namespace Com.RonPad.Entities.Fms
 	 */
     public class StateSystemMapping
     {
-        private GameState _creatingState;
+        private GameEngineState _creatingState;
         private ISystemProvider _provider;
 
         /**
@@ -23,7 +24,7 @@ namespace Com.RonPad.Entities.Fms
 		 * @param creatingState The SystemState that the mapping will belong to
 		 * @param type The System type for the mapping
 		 */
-        public StateSystemMapping(GameState creatingState, ISystemProvider provider)
+        public StateSystemMapping(GameEngineState creatingState, ISystemProvider provider)
         {
             _creatingState = creatingState;
             _provider = provider;
@@ -48,9 +49,9 @@ namespace Com.RonPad.Entities.Fms
 		 * @param system The System instance to use for the mapping
 		 * @return This StateSystemMapping, so more modifications can be applied
 		 */
-        public StateSystemMapping AddInstance(Core.System system)
+        public StateSystemMapping AddInstance(SystemBase systemBase)
         {
-            return _creatingState.AddInstance(system);
+            return _creatingState.AddInstance(systemBase);
         }
 
         /**
@@ -77,7 +78,7 @@ namespace Com.RonPad.Entities.Fms
 		 * @param method The method to provide the System instance.
 		 * @return This StateSystemMapping, so more modifications can be applied.
 		 */
-        public StateSystemMapping AddMethod(Func<Core.System> method)
+        public StateSystemMapping AddMethod(Func<SystemBase> method)
         {
             return _creatingState.AddMethod(method);
         }

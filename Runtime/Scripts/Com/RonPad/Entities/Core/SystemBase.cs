@@ -19,25 +19,25 @@ namespace Com.RonPad.Entities.Core
 	 * node lists - collections of nodes. Each node contains the components from an entity in the engine
 	 * that match the node.</p>
 	 */
-    public class System
+    public class SystemBase
     {
         /**
          * Used internally to manage the list of systems within the engine. The previous system in the list.
          */
-        internal System Previous;
+        internal SystemBase Previous;
         /**
          * Used internally to manage the list of systems within the engine. The next system in the list.
          */
-        internal System Next;
+        internal SystemBase Next;
         /**
          * Used internally to hold the priority of this system within the system list. This is 
          * used to order the systems so they are updated in the correct order.
          */
         internal int Priority = 0;
 
-        internal IGame Game;
+        protected IGameEngine Engine;
 
-        public System()
+        public SystemBase()
         {
         }
         /**
@@ -46,9 +46,9 @@ namespace Com.RonPad.Entities.Core
          * 
          * @param engine The engine the system was added to.
          */
-        public virtual void AddToGame(IGame game)
+        public virtual void AddToEngine(IGameEngine engine)
         {
-            this.Game = game;
+            this.Engine = engine;
         }
 
         /**
@@ -57,9 +57,9 @@ namespace Com.RonPad.Entities.Core
          * 
          * @param engine The engine the system was removed from.
          */
-        public virtual void RemoveFromGame(IGame game)
+        public virtual void RemoveFromEngine(IGameEngine engine)
         {
-            this.Game = null;
+            this.Engine = null;
         }
 
         /**

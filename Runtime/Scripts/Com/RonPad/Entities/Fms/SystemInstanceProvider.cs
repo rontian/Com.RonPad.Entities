@@ -4,18 +4,19 @@
 // @date   : 2021/07/21
 // *************************************************/
 
+using Com.RonPad.Entities.Core;
 namespace Com.RonPad.Entities.Fms
 {
     public class SystemInstanceProvider : ISystemProvider
     {
-        private Core.System _instance;
+        private SystemBase _instance;
 
         /**
          * Constructor
          *
          * @param instance The instance to return whenever a System is requested.
          */
-        public SystemInstanceProvider(Core.System instance)
+        public SystemInstanceProvider(SystemBase instance)
         {
             _instance = instance;
         }
@@ -25,7 +26,7 @@ namespace Com.RonPad.Entities.Fms
          *
          * @return The instance of the System
          */
-        public Core.System GetSystem()
+        public SystemBase GetSystem()
         {
             return _instance;
         }

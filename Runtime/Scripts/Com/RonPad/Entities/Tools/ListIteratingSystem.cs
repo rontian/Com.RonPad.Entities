@@ -31,7 +31,7 @@ namespace Com.RonPad.Entities.Tools
 	 *   }
 	 * }</code>
 	 */
-    public class ListIteratingSystem<T> : Core.System where T : Node
+    public class ListIteratingSystem<T> : SystemBase where T : Node
     {
         protected NodeList<T> NodeList;
         protected Action<T, float> NodeUpdateFunction;
@@ -51,9 +51,9 @@ namespace Com.RonPad.Entities.Tools
         {
 
         }
-        public override void AddToGame(IGame game)
+        public override void AddToEngine(IGameEngine engine)
         {
-            NodeList = game.GetNodeList<T>();
+            NodeList = engine.GetNodeList<T>();
             if (NodeAddedFunction != null)
             {
                 for (var node = NodeList.Head; node != null; node = (T)node.Next)
@@ -68,7 +68,7 @@ namespace Com.RonPad.Entities.Tools
             }
         }
 
-        public override void RemoveFromGame(IGame game)
+        public override void RemoveFromEngine(IGameEngine engine)
         {
             if (NodeAddedFunction != null)
             {

@@ -12,22 +12,22 @@ namespace Com.RonPad.Entities.Core
 	 */
     public class SystemList
     {
-        internal System Head;
-        internal System Tail;
+        internal SystemBase Head;
+        internal SystemBase Tail;
 
-        internal void Add(System system)
+        internal void Add(SystemBase systemBase)
         {
             if (Head == null)
             {
-                Head = Tail = system;
-                system.Next = system.Previous = null;
+                Head = Tail = systemBase;
+                systemBase.Next = systemBase.Previous = null;
             }
             else
             {
-                System node;
+                SystemBase node;
                 for (node = Tail; node != null; node = node.Previous)
                 {
-                    if (node.Priority <= system.Priority)
+                    if (node.Priority <= systemBase.Priority)
                     {
                         break;
                     }
@@ -36,48 +36,48 @@ namespace Com.RonPad.Entities.Core
                 {
                     if (Tail != null)
                     {
-                        Tail.Next = system;
-                        system.Previous = Tail;
-                        system.Next = null;
+                        Tail.Next = systemBase;
+                        systemBase.Previous = Tail;
+                        systemBase.Next = null;
                     }
-                    Tail = system;
+                    Tail = systemBase;
                 }
                 else if (node == null)
                 {
-                    system.Next = Head;
-                    system.Previous = null;
-                    Head.Previous = system;
-                    Head = system;
+                    systemBase.Next = Head;
+                    systemBase.Previous = null;
+                    Head.Previous = systemBase;
+                    Head = systemBase;
                 }
                 else
                 {
-                    system.Next = node.Next;
-                    system.Previous = node;
-                    node.Next.Previous = system;
-                    node.Next = system;
+                    systemBase.Next = node.Next;
+                    systemBase.Previous = node;
+                    node.Next.Previous = systemBase;
+                    node.Next = systemBase;
                 }
             }
         }
 
-        internal void Remove(System system)
+        internal void Remove(SystemBase systemBase)
         {
-            if (Head == system)
+            if (Head == systemBase)
             {
                 Head = Head.Next;
             }
-            if (Tail == system)
+            if (Tail == systemBase)
             {
                 Tail = Tail.Previous;
             }
 
-            if (system.Previous != null)
+            if (systemBase.Previous != null)
             {
-                system.Previous.Next = system.Next;
+                systemBase.Previous.Next = systemBase.Next;
             }
 
-            if (system.Next != null)
+            if (systemBase.Next != null)
             {
-                system.Next.Previous = system.Previous;
+                systemBase.Next.Previous = systemBase.Previous;
             }
             // N.B. Don't set system.next and system.previous to null because that will break the list iteration if node is the current node in the iteration.
         }
@@ -94,7 +94,7 @@ namespace Com.RonPad.Entities.Core
             Tail = null;
         }
 
-        internal System GetSystem(Type type)
+        internal SystemBase GetSystem(Type type)
         {
             for (var system = Head; system != null; system = system.Next)
             {

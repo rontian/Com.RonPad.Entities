@@ -15,18 +15,18 @@ namespace Com.RonPad.Entities.Fms
 	 * each of which has a set of System providers. When the state machine changes the state, it removes
 	 * Systems associated with the previous state and adds Systems associated with the new state.
 	 */
-    public class GameStateMachine
+    public class GameEngineStateMachine
     {
-        public readonly IGame Game;
-        private Dictionary<string, GameState> _states = new Dictionary<string, GameState>();
-        private GameState _currentState;
+        public readonly IGameEngine Engine;
+        private Dictionary<string, GameEngineState> _states = new Dictionary<string, GameEngineState>();
+        private GameEngineState _currentState;
 
         /**
 		 * Constructor. Creates an SystemStateMachine.
 		 */
-        public GameStateMachine(IGame game)
+        public GameEngineStateMachine(IGameEngine engine)
         {
-            Game = game;
+            Engine = engine;
         }
 
         /**
@@ -36,7 +36,7 @@ namespace Com.RonPad.Entities.Fms
 		 * @param state The state.
 		 * @return This state machine, so methods can be chained.
 		 */
-        public GameStateMachine AddState(string name, GameState state)
+        public GameEngineStateMachine AddState(string name, GameEngineState state)
         {
             _states.Add(name, state);
             return this;
@@ -49,9 +49,9 @@ namespace Com.RonPad.Entities.Fms
 		 * @return The new EntityState object that is the state. This will need to be configured with
 		 * the appropriate component providers.
 		 */
-        public GameState CreateState(string name)
+        public GameEngineState CreateState(string name)
         {
-            var state = new GameState();
+            var state = new GameEngineState();
             _states.Add(name, state);
             return state;
         }
@@ -93,13 +93,13 @@ namespace Com.RonPad.Entities.Fms
                         }
                         else
                         {
-                            Game.RemoveSystem(provider.GetSystem());
+                            Engine.RemoveSystem(provider.GetSystem());
                         }
                     }
                 }
                 foreach (var provider in toAdd)
                 {
-                    Game.AddSystem(provider.Value.GetSystem(), provider.Value.Priority);
+                    Engine.AddSystem(provider.Value.GetSystem(), provider.Value.Priority);
                 }
                 _currentState = newState;
             }

@@ -4,11 +4,12 @@
 // @date   : 2021/07/21
 // *************************************************/
 
+using Com.RonPad.Entities.Core;
 namespace Com.RonPad.Entities.Fms
 {
     public interface ISystemProvider
     {
-        Core.System GetSystem();
+        SystemBase GetSystem();
 
         object Identifier { get; }
 

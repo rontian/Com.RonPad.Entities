@@ -10,7 +10,7 @@ using Com.RonPad.Signals;
 using Com.RonPad.Entities.Core;
 namespace Com.RonPad.Entities.Interfaces
 {
-    public interface IGame : IDisposable
+    public interface IGameEngine : IDisposable
     {
         string Name { get; }
         bool IsUpdating { get; }
@@ -25,12 +25,12 @@ namespace Com.RonPad.Entities.Interfaces
         object GetNodeList(Type type);
         void ReleaseNodeList<T>();
         void ReleaseNodeList(Type type);
-        void AddSystem(Core.System system, int priority);
+        void AddSystem(SystemBase system, int priority);
         T GetSystem<T>();
         object GetSystem(Type type);
-        Core.System[] GetSystems();
-        void GetSystems(List<Core.System> results);
-        void RemoveSystem(Core.System system);
+        SystemBase[] GetSystems();
+        void GetSystems(List<SystemBase> results);
+        void RemoveSystem(SystemBase system);
         void RemoveAllSystems();
         void Pause();
         void Resume();

@@ -5,12 +5,13 @@
 // *************************************************/
 
 using System;
+using Com.RonPad.Entities.Core;
 namespace Com.RonPad.Entities.Fms
 {
     public class SystemSingletonProvider : ISystemProvider
     {
         private Type _type;
-        private Core.System _instance;
+        private SystemBase _instance;
 
         /**
          * Constructor
@@ -27,9 +28,9 @@ namespace Com.RonPad.Entities.Fms
          *
          * @return The single instance
          */
-        public Core.System GetSystem()
+        public SystemBase GetSystem()
         {
-            return _instance ??= (Core.System)Activator.CreateInstance(_type);
+            return _instance ??= (SystemBase)Activator.CreateInstance(_type);
         }
 
         /**

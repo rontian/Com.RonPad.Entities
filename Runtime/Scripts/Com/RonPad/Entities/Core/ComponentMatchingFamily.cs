@@ -26,7 +26,7 @@ namespace Com.RonPad.Entities.Core
         private Dictionary<Entity, T> _entities;
         private Dictionary<Type, string> _components;
         private NodePool<T> _nodePool;
-        private IGame _game;
+        private IGameEngine _engine;
         private Type _type;
 
         /**
@@ -36,10 +36,10 @@ namespace Com.RonPad.Entities.Core
 		 * @param nodeClass The type of node to create and manage a NodeList for.
 		 * @param engine The engine that this family is managing teh NodeList for.
 		 */
-        public ComponentMatchingFamily(IGame game)
+        public ComponentMatchingFamily(IGameEngine engine)
         {
             _type = typeof(T);
-            _game = game;
+            _engine = engine;
             Init();
         }
 
@@ -196,10 +196,10 @@ namespace Com.RonPad.Entities.Core
                 var node = _entities[entity];
                 _entities.Remove(entity);
                 _nodeList.Remove(node);
-                if (_game.IsUpdating)
+                if (_engine.IsUpdating)
                 {
                     _nodePool.Cache(node);
-                    _game.UpdateCompleted.Add(ReleaseNodePoolCache);
+                    _engine.UpdateCompleted.Add(ReleaseNodePoolCache);
                 }
                 else
                 {
@@ -214,7 +214,7 @@ namespace Com.RonPad.Entities.Core
 		 */
         private void ReleaseNodePoolCache()
         {
-            _game.UpdateCompleted.Remove(ReleaseNodePoolCache);
+            _engine.UpdateCompleted.Remove(ReleaseNodePoolCache);
             _nodePool.ReleaseCache();
         }
 

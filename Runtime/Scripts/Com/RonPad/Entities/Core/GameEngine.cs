@@ -11,7 +11,7 @@ using Com.RonPad.Entities.Tools;
 using Com.RonPad.Signals;
 namespace Com.RonPad.Entities.Core
 {
-    public class Game : IGame
+    public class GameEngine : IGameEngine
     {
         public string Name { get; }
         public Type FamilyType { get; set; }
@@ -30,7 +30,7 @@ namespace Com.RonPad.Entities.Core
 		 * 
 		 * The class must implement the Family interface.
 		 */
-        public Game(string name, Type familyType = null)
+        public GameEngine(string name, Type familyType = null)
         {
             Name = name;
             FamilyType = familyType;
@@ -220,10 +220,10 @@ namespace Com.RonPad.Entities.Core
 		 * @param priority The priority for updating the systems during the engine loop. A 
 		 * lower number means the system is updated sooner.
 		 */
-        public void AddSystem(Core.System system, int priority)
+        public void AddSystem(SystemBase system, int priority)
         {
             system.Priority = priority;
-            system.AddToGame(this);
+            system.AddToEngine(this);
             _systemList.Add(system);
         }
         /**
@@ -241,16 +241,16 @@ namespace Com.RonPad.Entities.Core
         {
             return _systemList.GetSystem(type);
         }
-        public Core.System[] GetSystems()
+        public SystemBase[] GetSystems()
         {
-            var results = new List<Core.System>();
+            var results = new List<SystemBase>();
             for (var system = _systemList.Head; system != null; system = system.Next)
             {
                 results.Add(system);
             }
             return results.ToArray();
         }
-        public void GetSystems(List<Core.System> results)
+        public void GetSystems(List<SystemBase> results)
         {
             if (results == null)
             {
@@ -267,10 +267,10 @@ namespace Com.RonPad.Entities.Core
 		 * 
 		 * @param system The system to remove from the engine.
 		 */
-        public void RemoveSystem(Core.System system)
+        public void RemoveSystem(SystemBase system)
         {
             _systemList.Remove(system);
-            system.RemoveFromGame(this);
+            system.RemoveFromEngine(this);
         }
         /**
 		 * Remove all systems from the engine.
@@ -283,7 +283,7 @@ namespace Com.RonPad.Entities.Core
                 _systemList.Head = _systemList.Head.Next;
                 system.Previous = null;
                 system.Next = null;
-                system.RemoveFromGame(this);
+                system.RemoveFromEngine(this);
             }
             _systemList.Tail = null;
         }
